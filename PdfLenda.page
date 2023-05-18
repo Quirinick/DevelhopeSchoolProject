@@ -1,0 +1,151 @@
+<apex:page id="Subject" standardController="Subject__c" extensions="controllingPdf" showHeader="false" applyBodyTag="false"
+    title="pdfSlimpay" renderAs="pdf">
+
+    <head>
+        <style>
+            body {
+                font-size: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #525252;
+            }
+
+            @page {
+                padding-top: 40px;
+                background: white;
+                width: 21cm;
+                height: 29.7cm;
+                display: block;
+                margin: 10mm; // box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+                font-family: Arial, Helvetica, sans-serif;
+                @top-left {
+                    content: element(header);
+                }
+                @bottom-right {
+                    content: element(footer);
+                }
+            }
+
+            div.header {
+                position: running(header);
+                margin: 0px !important;
+            }
+
+            div.footer {
+                position: running(footer);
+                margin: 0px !important;
+            }
+
+            table {
+                width: 100%;
+                padding-top: 10px;
+            }
+
+            table.productTable,
+            td.productTable,
+            th.productTable {
+                border: 1px solid #F2645B !important;
+                padding: 5px;
+                overflow-wrap: break-word;
+
+            }
+
+            th.productTable {
+                color: #f9443a;
+
+                /*
+                background-color: #ED7D31;
+                color: white;
+                */
+                font-weight: bold;
+            }
+
+            tr {
+                page-break-inside: avoid;
+
+            }
+
+            div.hi {
+                font-size: 15px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #060606;
+                float: right;
+            }
+
+            h2 {
+                font-size: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #525252;
+                text-align: center;
+            }
+
+            h3 {
+                font-size: 15px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #525252;
+            }
+
+            .firma {
+                display: block;
+                text-align: right;
+                padding-bottom: 5 px;
+                padding-top: 500 px;
+            }
+        </style>
+    </head>
+    <div class="centered">
+        <div style="border-bottom: 2px solid #f9443a;">
+            <apex:image url="{!$Resource.logoDevelhope}" width="250" />
+            <div class='hi'>
+                <apex:outputText value="{0,date}">
+                    <apex:param value="{!Today}" />
+                </apex:outputText>
+            </div>
+            <h2> Grades List </h2>
+            <h3> Subject: {!Subject__c.Name}</h3>
+            <h3> Teacher: {!Subject__c.Teacher__r.Name}</h3>
+            <h3> Department: {!Subject__c.Teacher__r.Department__r.Name} </h3>
+
+        </div>
+
+    </div>
+
+
+
+    <table class="productTable">
+        <th class="productTable">
+            Student
+        </th>
+        <th class="productTable">
+            Grade
+        </th>
+        <apex:repeat var="p" value="{!notaList}">
+            <tr>
+                <td class="productTable">
+                    <apex:outputText value="{!p.Student__r.name}" />
+
+                </td>
+                <td class="productTable">
+                    <apex:outputText value="{!p.Name}" />
+                </td>
+            </tr>
+        </apex:repeat>
+
+    </table>
+    <div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+    </div>
+    <div style="display: block; text-align: right; padding-bottom: 5 px; padding-top: 500 px;">
+        <h3>CEO: Pippo Fausto</h3>
+        <apex:image url="{!$Resource.logoDevelhope}" height="60px" />
+    </div>
+</apex:page>
+
+
+
+// Questa pagina Visualforce viene utilizzata per generare un PDF contenente una lista di voti degli studenti per una determinata materia
